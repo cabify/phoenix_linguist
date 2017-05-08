@@ -7,6 +7,7 @@ defmodule PhoenixLocale.Mixfile do
      elixir: "~> 1.4",
      description: description(),
      package: package(),
+     test_coverage: [tool: ExCoveralls],
      deps: deps()]
   end
 
@@ -39,7 +40,8 @@ defmodule PhoenixLocale.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:cowboy, "~> 1.0"},
      {:earmark, "~> 0.1", only: :dev},
-     {:ex_doc, "~> 0.11", only: :dev}
+     {:ex_doc, "~> 0.11", only: :dev},
+     {:excoveralls, "~> 0.4", only: :test}
     ]
   end
 
