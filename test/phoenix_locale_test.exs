@@ -1,16 +1,16 @@
-defmodule PhoenixLinguistTest do
+defmodule PhoenixLocaleTest do
   use ExUnit.Case
 
-  import PhoenixLinguist
+  import PhoenixLocale
   import Plug.Conn
 
   setup_all do
-    Application.put_env(:phoenix_linguist, PhoenixLinguist, %{i18n: PhoenixLinguistTest.I18n})
+    Application.put_env(:phoenix_locale, PhoenixLocale, %{i18n: PhoenixLocaleTest.I18n})
     :ok
   end
 
   setup do
-    conn = %Plug.Conn{params: %{}, private: %{phoenix_endpoint: PhoenixLinguist, plug_session: %{}}}
+    conn = %Plug.Conn{params: %{}, private: %{phoenix_endpoint: PhoenixLocale, plug_session: %{}}}
     {:ok, conn: conn}
   end
 
@@ -37,7 +37,6 @@ defmodule PhoenixLinguistTest do
     conn = put_session(context.conn, "locale", "en")
     assert session_locale(conn) == "en"
   end
-
 
   test "req_header_locale returns first request header locale", context do
     conn = %Plug.Conn{context.conn | req_headers: [{"accept-language", "en-US,en;q=0.8,pt;q=0.6"}]}
@@ -67,5 +66,4 @@ defmodule PhoenixLinguistTest do
   test "prefered_locale returns nil if none match", context do
     assert prefered_locale(context.conn) == nil
   end
-
 end

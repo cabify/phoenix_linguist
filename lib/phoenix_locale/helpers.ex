@@ -1,21 +1,9 @@
-defmodule PhoenixLinguist.Helpers do
+defmodule PhoenixLocale.Helpers do
   @moduledoc """
   helper functions to use on views
   """
 
-  import PhoenixLinguist, only: [prefered_locale: 1, default_locale: 1, i18n: 1]
-
-  @doc """
-  translate given string with the apropriated locale, raise exception if string doesnt exist
-  """
-  def t!(conn, string, bindings \\ []) do
-    case prefered_locale(conn) do
-      nil ->
-        i18n(conn).t!(default_locale(conn), string, bindings)
-      locale ->
-        i18n(conn).t!(locale, string, bindings)
-    end
-  end
+  import PhoenixLocale, only: [prefered_locale: 1, default_locale: 1, i18n: 1]
 
   @doc """
   translate given string with the apropriated locale, return empty string if the translation string doesn't exist
@@ -35,7 +23,6 @@ defmodule PhoenixLinguist.Helpers do
     end
   end
 
-
   @doc """
   call prefered_locale, if the result is nil, return the default locale
   """
@@ -46,13 +33,5 @@ defmodule PhoenixLinguist.Helpers do
       locale ->
         locale
     end
-  end
-
-
-  defp get_view(conn) do
-    conn.private.phoenix_endpoint.config(:otp_app)
-    |> to_string
-    |> Mix.Utils.camelize
-    |> Module.concat View
   end
 end

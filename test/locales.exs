@@ -1,21 +1,16 @@
-defmodule PhoenixLinguistTest.I18n do
-  use Linguist.Vocabulary
+defmodule PhoenixLocaleTest.I18n do
+  def locales do
+    ~w(fr es en)
+  end
 
-  locale "fr", [
-             flash: [
-                     notice: [
-                             hello: "salut"
-                         ],
-                     interpolation_at_beginning: "%{name} at beginning",
-                 ]
-         ]
+  def default_locale do
+    "fr"
+  end
 
-  locale "en", [
-             flash: [
-                     notice: [
-                             hello: "hello"
-                         ],
-                     interpolation_at_beginning: "%{name} at beginning",
-                 ]
-         ]
+  # Example implementation for testing helpers and to show what is expect to provide
+  def t("fr", "flash.notice.hello", []), do: {:ok, "salut"}
+  def t("fr", "flash.notice.bye", []), do: {:ok, ""}
+  def t(_locale, _string, _bindings) do
+    {:ok, "wadus"}
+  end
 end

@@ -1,11 +1,10 @@
-defmodule PhoenixLinguist do
+defmodule PhoenixLocale do
   @moduledoc """
-  module that helps integrating linguist into phoenix
+  module that provides helpers to localise Phoenix applications
 
   """
 
-  import Plug.Conn, only: [get_req_header: 2, get_session: 2, put_session: 3]
-  import Phoenix.Controller, only: [endpoint_module: 1]
+  import Plug.Conn, only: [get_req_header: 2, get_session: 2]  
 
   @doc """
   get the prefered locale based on the input locale, session and accept-language request header
@@ -32,9 +31,9 @@ defmodule PhoenixLinguist do
   def params_locale(conn) do
     locale = conn.params["locale"]
     cond do
-      locale && locale in i18n(conn).locales ->
+      locale && locale in i18n(conn).locales() ->
         locale
-      locale && not locale in i18n(conn).locales ->
+      locale && not locale in i18n(conn).locales() ->
         :wrong
       true ->
         nil
@@ -47,8 +46,7 @@ defmodule PhoenixLinguist do
 
   """
   def default_locale(conn) do
-    #locales come reversed, so we get last instead
-    i18n(conn).locales |> List.last()
+    i18n(conn).default_locale()
   end
 
   @doc """
@@ -77,10 +75,9 @@ defmodule PhoenixLinguist do
   get application's I18n module
 
   """
-  def i18n(conn) do
-    Mix.Project.config()[:app]
-    |> Application.get_env(endpoint_module(conn))
-    |> Dict.get(:i18n)
+  def i18n(_conn) do
+    Application.get_env(:phoenix_locale, PhoenixLocale)
+    |> Map.get(:i18n)
   end
 
 end

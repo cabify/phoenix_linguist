@@ -1,14 +1,13 @@
-defmodule PhoenixLinguist.Mixfile do
+defmodule PhoenixLocale.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :phoenix_linguist,
+    [app: :phoenix_locale,
      version: "0.0.1",
-     elixir: "~> 1.0",
-     description: description,
-     package: package,
-     docs: &docs/0,
-     deps: deps]
+     elixir: "~> 1.4",
+     description: description(),
+     package: package(),
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -19,7 +18,7 @@ defmodule PhoenixLinguist.Mixfile do
   end
 
   defp applications(:test) do
-    [:phoenix] ++ applications(:prod)
+    [:phoenix, :phoenix_html] ++ applications(:prod)
   end
 
   defp applications(_) do
@@ -36,33 +35,24 @@ defmodule PhoenixLinguist.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    # [{:phoenix, ">= 0.8.0"},
-    [{:phoenix, ">= 0.10.0"},
+    [{:phoenix, "~> 1.2"},
+     {:phoenix_html, "~> 2.1"},
      {:cowboy, "~> 1.0"},
-     {:linguist, ">= 0.1.5"},
-     {:earmark, "~> 0.1", only: :docs},
-     {:ex_doc, "~> 0.7.1", only: :docs}
+     {:earmark, "~> 0.1", only: :dev},
+     {:ex_doc, "~> 0.11", only: :dev}
     ]
   end
 
   defp description do
-    "A project that integrates Phoenix with Linguist, providing a plug and view helpers"
+    "Locale functions to be integrated into Phoenix projects, providing a plug and view helpers. Started from https://github.com/jxs/phoenix_linguist"
   end
 
   defp package do
-    [
-        files: ["lib", "mix.exs", "README*", "LICENSE*"],
-        contributors: ["Joao Oliveira"],
-        licenses: ["MIT"],
-        links: %{"GitHub" => "https://github.com/jxs/phoenix_linguist"}
+    [files: ["lib", "mix.exs", "README*", "LICENSE*"],
+     maintainers: ["Paco Guzmán"],
+     contributors: ["Paco Guzmán", "Joao Oliveira"],
+     licenses: ["MIT"],
+     links: %{"GitHub" => "https://github.com/cabify/phoenix_locale"}
     ]
   end
-
-  defp docs do
-    {ref, 0} = System.cmd("git", ["rev-parse", "--verify", "--quiet", "HEAD"])
-    [source_ref: ref,
-     main: "README",
-     readme: "README.md"]
-  end
-
 end
