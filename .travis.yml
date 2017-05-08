@@ -1,8 +1,12 @@
 language: elixir
+sudo: false # to use faster container based build environment
 elixir:
   - 1.4.2
 otp_release:
   - 19.2
-sudo: false # to use faster container based build environment
+cache:
+  directories:
+    - _build
+    - deps
 script:
   - mix test
