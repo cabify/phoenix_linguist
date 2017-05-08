@@ -29,7 +29,7 @@ defmodule PhoenixLocale.Plug do
 
   defp raise_no_available_locale(_conn) do
     Application.get_env(:phoenix_locale, PhoenixLocale)
-    |> Map.get(:raise_no_available_locale)
+    |> Keyword.get(:raise_no_available_locale)
   end
 
   defp put_locale_in_session(conn, locale) do

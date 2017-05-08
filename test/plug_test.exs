@@ -5,7 +5,7 @@ defmodule PhoenixLocalePlugTest do
   import Plug.Conn
 
   setup do
-    Application.put_env(:phoenix_locale, PhoenixLocale, %{i18n: PhoenixLocaleTest.I18n})
+    Application.put_env(:phoenix_locale, PhoenixLocale, [i18n: PhoenixLocaleTest.I18n])
     conn = conn(:get, "/")
     conn = %Plug.Conn{conn | params: %{}, private: %{phoenix_endpoint: __MODULE__, plug_session: %{}}}
     {:ok, conn: conn}
@@ -29,7 +29,7 @@ defmodule PhoenixLocalePlugTest do
   end
 
   test "plug call puts 404 status and renders ErrorView if prefered_local returns :wrong (not in available locales)", context do
-    Application.put_env(:phoenix_locale, PhoenixLocale, %{i18n: PhoenixLocaleTest.I18n, raise_no_available_locale: true})
+    Application.put_env(:phoenix_locale, PhoenixLocale, [i18n: PhoenixLocaleTest.I18n, raise_no_available_locale: true])
     conn = %Plug.Conn{context.conn | params: %{"locale"=> "pt"}}
 
     assert_raise PhoenixLocale.NoAvailableLocaleError, fn ->

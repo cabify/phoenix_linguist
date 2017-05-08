@@ -4,7 +4,7 @@ defmodule PhoenixLocale do
 
   """
 
-  import Plug.Conn, only: [get_req_header: 2, get_session: 2]  
+  import Plug.Conn, only: [get_req_header: 2, get_session: 2]
 
   @doc """
   get the prefered locale based on the input locale, session and accept-language request header
@@ -77,7 +77,7 @@ defmodule PhoenixLocale do
   """
   def i18n(_conn) do
     Application.get_env(:phoenix_locale, PhoenixLocale)
-    |> Map.get(:i18n)
+    |> Keyword.get(:i18n)
   end
 
 end

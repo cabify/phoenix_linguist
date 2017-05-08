@@ -5,7 +5,7 @@ defmodule PhoenixLocaleTest do
   import Plug.Conn
 
   setup_all do
-    Application.put_env(:phoenix_locale, PhoenixLocale, %{i18n: PhoenixLocaleTest.I18n})
+    Application.put_env(:phoenix_locale, PhoenixLocale, [i18n: PhoenixLocaleTest.I18n])
     :ok
   end
 
