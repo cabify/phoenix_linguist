@@ -36,7 +36,7 @@ defmodule PhoenixLocale.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:phoenix, "~> 1.2"},
+    [{:phoenix, "~> 1.2 or ~> 1.2-rc"},
      {:phoenix_html, "~> 2.1"},
      {:cowboy, "~> 1.0"},
      {:earmark, "~> 0.1", only: :dev},
