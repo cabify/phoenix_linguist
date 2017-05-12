@@ -3,7 +3,7 @@ defmodule PhoenixLocale.Mixfile do
 
   def project do
     [app: :phoenix_locale,
-     version: "0.0.2",
+     version: "0.0.3-rc.0",
      elixir: "~> 1.4",
      description: description(),
      package: package(),
