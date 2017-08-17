@@ -3,8 +3,8 @@ defmodule PhoenixLocale.Mixfile do
 
   def project do
     [app: :phoenix_locale,
-     version: "0.0.3-rc.0",
-     elixir: "~> 1.4",
+     version: "0.0.4",
+     elixir: "~> 1.5",
      description: description(),
      package: package(),
      test_coverage: [tool: ExCoveralls],
@@ -36,7 +36,7 @@ defmodule PhoenixLocale.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:phoenix, "~> 1.2 or ~> 1.2-rc"},
+    [{:phoenix, "~> 1.2"},
      {:phoenix_html, "~> 2.1"},
      {:cowboy, "~> 1.0"},
      {:earmark, "~> 0.1", only: :dev},
