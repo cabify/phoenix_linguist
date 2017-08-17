@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Add new fallback to x-geoip-country-code
 * Update dependencies
 * Test against Elixir 1.5.1 and Erlang 20.0
 

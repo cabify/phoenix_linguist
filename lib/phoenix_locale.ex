@@ -15,10 +15,12 @@ defmodule PhoenixLocale do
     cond do
       params_locale(conn) ->
         params_locale(conn)
+      req_header_locale(conn, "accept-language") ->
+        req_header_locale(conn, "accept-language")
+      req_header_locale(conn, "x-geoip-country-code") ->
+        req_header_locale(conn, "x-geoip-country-code")
       session_locale(conn) ->
         session_locale(conn)
-      req_header_locale(conn) ->
-        req_header_locale(conn)
       true ->
         nil
     end
@@ -58,16 +60,28 @@ defmodule PhoenixLocale do
   end
 
   @doc """
-   match the prefered locale based on the accept_language http request header, and the existing I18n locales
-   return nil if none
+  match the prefered locale based on the accept_language http request header, and the existing I18n locales
+  return nil if none
 
-   """
-  def req_header_locale(conn) do
-    accept_language = get_req_header(conn, "accept-language")
+  """
+  def req_header_locale(conn, "accept-language" = header) do
+    accept_language = get_req_header(conn, header)
     if not Enum.empty?(accept_language) do
       accept_language = List.first(accept_language)
       matches = Regex.scan(~r/[a-z]{2,8}/, accept_language) |> List.flatten
       Enum.find matches, fn(x) -> x in i18n(conn).locales end
+    end
+  end
+
+  @doc """
+  match the prefered locale based on the x-geoip-country-code http request header, and the existing I18n locales
+  return nil if none
+
+  """
+  def req_header_locale(conn, "x-geoip-country-code" = header) do
+    country_code = get_req_header(conn, header)
+    if not Enum.empty?(country_code) do
+      Enum.find country_code, fn(x) -> x in i18n(conn).locales end
     end
   end
 
