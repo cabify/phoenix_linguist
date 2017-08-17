@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Test against Elixir 1.5.1 and Erlang 20.0
+
 ## 0.0.3-rc.0 (2017-05-12)
 
 * Enhancements
