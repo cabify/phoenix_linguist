@@ -38,14 +38,19 @@ defmodule PhoenixLocaleTest do
     assert session_locale(conn) == "en"
   end
 
-  test "req_header_locale returns first request header locale", context do
+  test "req_header_locale returns first request accept-language header locale", context do
     conn = %Plug.Conn{context.conn | req_headers: [{"accept-language", "en-US,en;q=0.8,pt;q=0.6"}]}
-    assert req_header_locale(conn) == "en"
+    assert req_header_locale(conn, "accept-language") == "en"
   end
 
-  test "req_header_locale returns second request header locale", context do
+  test "req_header_locale returns second request accept-language header locale", context do
     conn = %Plug.Conn{context.conn | req_headers: [{"accept-language", "pt-PT,en;q=0.8,pt;q=0.6"}]}
-    assert req_header_locale(conn) == "en"
+    assert req_header_locale(conn, "accept-language") == "en"
+  end
+
+  test "req_header_locale returns second request x-geoip-country-code header locale", context do
+    conn = %Plug.Conn{context.conn | req_headers: [{"x-geoip-country-code", "en"}]}
+    assert req_header_locale(conn, "x-geoip-country-code") == "en"
   end
 
   test "prefered_locale returns params_locale first", context do
@@ -53,13 +58,18 @@ defmodule PhoenixLocaleTest do
     assert prefered_locale(conn) == "en"
   end
 
-  test "prefered_locale returns session_locale second", context do
-    conn = put_session(context.conn, "locale", "fr")
+  test "prefered_locale returns req_header_locale accept-header second", context do
+    conn = %Plug.Conn{context.conn | req_headers: [{"accept-language", "fr-FR,en;q=0.8,pt;q=0.6"}]}
     assert prefered_locale(conn) == "fr"
   end
 
-  test "prefered_locale returns req_header_locale third", context do
-    conn = %Plug.Conn{context.conn | req_headers: [{"accept-language", "fr-FR,en;q=0.8,pt;q=0.6"}]}
+  test "prefered_locale returns req_header_locale x-geoip-country-code second", context do
+    conn = %Plug.Conn{context.conn | req_headers: [{"x-geoip-country-code", "fr"}]}
+    assert prefered_locale(conn) == "fr"
+  end
+
+  test "prefered_locale returns session_locale forth", context do
+    conn = put_session(context.conn, "locale", "fr")
     assert prefered_locale(conn) == "fr"
   end
 
